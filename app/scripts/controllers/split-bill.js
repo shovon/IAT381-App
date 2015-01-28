@@ -11,17 +11,24 @@ angular.module('halloumiAppApp')
   .controller('SplitBillCtrl', function ($scope) 
   {
   	$scope.sumOfValues = 0;
-    $scope.addItem = [{ billAmount : $scope.test }];
 
-
-    $scope.test = $scope.addItem.billAmount;
+    // The items that you want to sum.
+    $scope.addItem = [{ billAmount : '0' }];
 
     $scope.newItem = function($event)
     {
-        $scope.addItem.push({ billAmount : $scope.test });
+        $scope.addItem.push({ billAmount : '0' });
         $event.preventDefault();
     }
 
+    $scope.onchange = function ($event, item) {
+      console.log(item);
+      console.log($scope.addItem.map(function (item) {
+        return parseInt(item.billAmount, 10);
+      }).reduce(function (prev, next) {
+        return prev + next;
+      }));
+    };
 
     $scope.calculate = function() 
     {
